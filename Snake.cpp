@@ -22,3 +22,67 @@ void Snake::insertatend(int newX,int newY)
 	tail=newNode;
 	length++;
 }
+void Snake::deleteattail()
+{
+	if(head==NULL)
+	{
+		return;
+	}
+	if(head==tail)
+	{
+		delete head;
+		head=tail=NULL;
+		length=0;
+		return;
+	}
+	Node*temp=head;
+	while(temp->next!=tail)
+	{
+		temp=temp->next;
+	}
+	Node*del=tail;
+	temp->next=NULL;
+	delete del;
+	tail=temp;
+	length--;
+}
+void Snake::displaysnake()
+{
+	if(head==NULL)
+	{
+		return;
+	}
+	Node*temp=head;
+	while(temp!=NULL)
+	{
+		cout<<"("<<temp->x<<","<<temp->y<<")";
+		if(temp->next != NULL)
+        {
+            cout << " , ";
+        }
+		temp=temp->next;
+	}
+}
+void Snake::movesnake(char direction) 
+{
+	//only moving the snake asnow it is not eating anything
+    int newX = head->x;
+    int newY = head->y;
+
+    if(direction == 'U') {
+        newY--;
+    }
+    else if(direction == 'D') {
+        newY++;
+    }
+    else if(direction == 'L') {
+        newX--;
+    }
+    else if(direction == 'R') {
+        newX++;
+    }
+
+    insertatend(newX, newY);
+    deleteattail();
+}
+
