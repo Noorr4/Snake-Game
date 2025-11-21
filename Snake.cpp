@@ -125,4 +125,3 @@ void Snake::movesnake(char direction,bool grow)
 	}
 	
 }
-
