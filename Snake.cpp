@@ -78,10 +78,18 @@ int Snake::getheadY()
 }
 void Snake::grow()
 {
-	// grow = add new block without removing tail
-    movesnake('X', true);  // We will NOT use 'X' direction; main will call grow after move
+    length++;  
 }
+void Snake::insertAtHead(int x, int y) {
+    Node* n = new Node();
+    n->x = x;
+    n->y = y;
+    n->next = head;  // now compiler knows head
+    head = n;
 
+    if (tail == NULL)
+        tail = n;
+}
 vector<Node*> Snake::getBody() {
     vector<Node*> body;
     Node* temp = head;
@@ -91,37 +99,31 @@ vector<Node*> Snake::getBody() {
     }
     return body;
 }
-void Snake::movesnake(char direction)
-{
-    movesnake(direction, false);   
+bool Snake::isOnBody(int x, int y) {
+    // Start from the node after head to avoid checking head itself
+    Node* temp = head->next;
+    while (temp != NULL) {
+        if (temp->x == x && temp->y == y) {
+            return true;
+        }
+        temp = temp->next;
+    }
+    return false;
 }
-void Snake::movesnake(char direction,bool grow)
+void Snake::movesnake(char direction, bool grow)
 {
-	int newX=head->x;
-	int newY=head->y;
-	
-	if(direction=='U')
-	{
-		newY--;
-	}
-	else if(direction=='D')
-	{
-		newY++;
-	}
-	else if(direction=='L')
-	{
-		newX--;
-	}
-	else if(direction=='R')
-	{
-		newX++;
-	}
-	// create new head node (we use insertatend to add a block at tail side of your linked list)
-    // but your design uses head at front and tail at end; keeping your functions:
-    insertatend(newX,newY);
-    if(!grow)
-    {
-    	deleteattail();
-	}
-	
+    int newX = head->x;
+    int newY = head->y;
+
+    if(direction == 'U') newY--;
+    else if(direction == 'D') newY++;
+    else if(direction == 'L') newX--;
+    else if(direction == 'R') newX++;
+
+    insertAtHead(newX, newY);
+
+    if (!grow)
+        deleteattail();
 }
+
+

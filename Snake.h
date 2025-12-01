@@ -2,6 +2,7 @@
 #define SNAKE_H
 #include <vector>
 using namespace std;
+
 struct Node {
     int x;
     int y;
@@ -9,26 +10,24 @@ struct Node {
 };
 
 class Snake {
-    private:
-        Node *head;
-        Node *tail;
-        int length;
+private:
+    Node *head;
+    Node *tail;
+    int length;
 
-    public:
-        Node* gethead();
-        int getheadX();
-        int getheadY();
-        Snake();
-        void insertatend(int newX,int newY);
-        void deleteattail();
-        void movesnake(char direction);
-        void displaysnake();
-        void movesnake(char direction,bool grow);
-        
-        // Utility for display & collision
-        vector<Node*>getBody();
-        
-        void grow();
+public:
+    Node* gethead();
+    int getheadX();
+    int getheadY();
+    Snake();
+    void insertatend(int newX,int newY);
+    void deleteattail();
+    void displaysnake();
+    void movesnake(char direction,bool grow);
+    void insertAtHead(int x, int y);
+    vector<Node*> getBody();
+    void grow();
+    bool isOnBody(int x, int y); // ADD THIS LINE
 };
 
 #endif
